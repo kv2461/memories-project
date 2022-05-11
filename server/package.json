@@ -8,7 +8,7 @@
     "start": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kevin Vicencio <kevinarnoldcode@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.0",
