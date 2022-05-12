@@ -22,3 +22,14 @@ export const createPost = (post) => async (dispatch) => {
     }
 
 }
+
+export const updatePost = (id,post) => async(dispatch) => {
+    try {
+        const { data } = await api.updatePost(id,post); //api request is returning the updated memory/post.. so we can destructure
+        //the response into data
+
+        dispatch({type:'UPDATE', payload:data });//call dispatch to call action update and the payload
+    } catch (error) {
+        console.log(error.message);
+    }
+}
