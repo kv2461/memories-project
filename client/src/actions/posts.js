@@ -8,7 +8,7 @@ export const getPosts = () => async (dispatch) => {
 
         dispatch({ type: 'FETCH_ALL', payload: data });//here we are using redux to pass/dispatch an action from data from backend
     } catch (error) {
-        console.log(error.message)
+        console.log(error)
     }
 }
 
@@ -18,7 +18,7 @@ export const createPost = (post) => async (dispatch) => {
 
         dispatch({ type:'CREATE',payload:data});
     } catch(error) {
-        console.log(error.message);
+        console.log(error);
     }
 
 }
@@ -30,6 +30,6 @@ export const updatePost = (id,post) => async(dispatch) => {
 
         dispatch({type:'UPDATE', payload:data });//call dispatch to call action update and the payload
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 }

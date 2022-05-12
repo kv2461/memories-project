@@ -19,6 +19,6 @@ const CONNECTION_URL = `mongodb+srv://kv2461:LTYGr2zzy86W21Hw@cluster0.htfej.mon
 
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(CONNECTION_URL, { useNewUrlParser:true, useUnifiedTopology:true})//for simplisti purposes, avoids errors
+mongoose.connect(CONNECTION_URL, { useNewUrlParser:true, useUnifiedTopology:true})//for simplistic purposes, avoids errors
     .then(()=>app.listen(PORT,()=>console.log(`Server is running on port: ${PORT}`)))
     .catch((error)=>console.log(error.message));
