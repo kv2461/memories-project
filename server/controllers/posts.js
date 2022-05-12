@@ -6,8 +6,6 @@ export const getPosts = async (req,res) => {
     try{
         const postMessages = await PostMessage.find();
 
-        console.log(postMessages);
-
         res.status(200).json(postMessages);
     } catch (error) {
         res.status(404).json({message:error.message});
@@ -41,5 +39,14 @@ export const updatePost = async(req,res) => {
     //async function, post from req.body is sent from front end, have to specify new to true so we can recieve updated ver of that post
     //have to spread all other post attributes
     res.json(updatedPost);
+}
 
+export const deletePost = async(req,res) => {
+    const { id:_id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+
+    await PostMessage.findByIdAndRemove(_id);
+
+    res.json({ message:'Post deleted successfully' });
 }

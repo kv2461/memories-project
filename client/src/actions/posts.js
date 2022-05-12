@@ -1,6 +1,6 @@
 import * as api from '../api';
 
-//Action Creators
+//Action Creators 
 
 export const getPosts = () => async (dispatch) => {
     try {
@@ -29,6 +29,16 @@ export const updatePost = (id,post) => async(dispatch) => {
         //the response into data
 
         dispatch({type:'UPDATE', payload:data });//call dispatch to call action update and the payload
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deletePost = (id) => async(dispatch) => {
+    try{
+        await api.deletePost(id); //we don't have to assign this to a variable because we are just deleting
+
+        dispatch({type:'DELETE', payload:id });
     } catch (error) {
         console.log(error);
     }
