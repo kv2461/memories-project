@@ -14,7 +14,7 @@ const App = () => {
     const dispatch = useDispatch();//a hook
 
     useEffect(()=> {
-        dispatch(getPosts());
+        dispatch(getPosts()); //from actions
     },[currentId,dispatch]);
     return(
         <Container maxWidth='lg'>

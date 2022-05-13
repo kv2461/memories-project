@@ -8,5 +8,5 @@ router.get('/',getPosts);
 router.post('/',createPost);
 router.patch('/:id',updatePost) //patch is used for updating existing posts, /:id makes it a dynamic id query 
 router.delete('/:id',deletePost)
-router.patch('/:id/likePost',likePost)
+router.patch('/:id/likePost',likePost) //needs likepost so it doesn't get confused with updatePost patch route?
 export default router;
