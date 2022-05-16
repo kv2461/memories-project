@@ -54,10 +54,22 @@ export const deletePost = async(req,res) => {
 export const likePost = async (req,res) => {
     const { id:_id } = req.params;
 
+    if(!req.userId) return res.json({message:'Unauthenticated'}); //auth middleware populates this
+
     if(!mongoose.Types.ObjectId.isValid(_id)) res.status(404).send('No post with that id'); //check if its a valid mongoose objectId
 
     const post = await PostMessage.findById(_id);
-    const updatedPost = await PostMessage.findByIdAndUpdate(_id, {likeCount:post.likeCount+1}, {new:true});
+
+    const index = post.likes.findIndex((id)=>id===String(req.userId)); //dislike if id has already liked
+
+    if (index === -1) { //only if id hasn't already liked
+        //like the post
+        post.likes.push(req.userId);
+    } else {
+        //dislike the post
+        post.likes = post.likes.filter((id)=> id !== String(req.userId))//return all the likes NOT like the userId for dislike
+    }
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, {new:true});
     
     res.json(updatedPost);
 }

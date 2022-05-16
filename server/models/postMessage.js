@@ -6,9 +6,9 @@ const postSchema = new mongoose.Schema({
     creator:String,
     tags:[String],
     selectedFile:String, //convert image into a string using base 64
-    likeCount:{
-        type:Number,
-        default:0
+    likes:{
+        type:[String],
+        default:[],
     },
     createdAt:{
         type:Date,
