@@ -1,15 +1,26 @@
-import { FETCH_ALL,CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 import * as api from '../api'; // allows us to access api files as object methods such as api.fetchPosts();
 
 //Action Creators 
 
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (page) => async (dispatch) => {
     try {
-        const { data } = await api.fetchPosts(); //destructure response into data
+        const { data } = await api.fetchPosts(page); //destructure response into data
 
         dispatch({ type: FETCH_ALL, payload: data });//here we are using redux to pass/dispatch an action from data from backend
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+    try {
+        const { data : { data }} = await api.fetchPostsBySearch(searchQuery); //destructure data twice, first time because of axios request
+        //2nd time is cuz we put it in an a new object called data after searching 
+        
+        dispatch({ type:FETCH_BY_SEARCH, payload:data });
+    } catch (error) {
+        console.log(error);
     }
 }
 

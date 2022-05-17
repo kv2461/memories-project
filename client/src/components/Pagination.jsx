@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Pagination, PaginationItem } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getPosts } from '../actions/posts';
 
 import useStyles from './styles';
 
-const Paginate = () => {
+const Paginate = ({ page }) => {
+    const { numberOfPages } = useSelector((state)=>state.posts); //retrieve stateofposts
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (page) dispatch(getPosts(page));
+    },[page])
 
     return(
         <Pagination 
             classes={{ ul:classes.ul }}
-            count={5} //number of pages, static amount currently but we need to dynamically fetch the number of pages depending on existing number of posts
-            page={1} //current page, needs to be dynamic
+            count={numberOfPages} //number of pages from state using total/limit
+            page={Number(page) || 1} //current page
             variant = 'outlined'
             color='primary'
             renderItem={(item)=> (
-                <PaginationItem {...item} component={Link} to={`/posts?page=${1}`} />
+                <PaginationItem {...item} component={Link} to={`/posts?page=${item.page}`} />
             )}
         />
     )

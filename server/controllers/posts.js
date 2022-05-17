@@ -3,12 +3,32 @@ import mongoose from 'mongoose';
 import PostMessage from '../models/postMessage.js';
 
 export const getPosts = async (req,res) => {
+    const { page } = req.query; //destructure page
     try{
-        const postMessages = await PostMessage.find();
+        const LIMIT = 6; //number of posts per page
+        const startIndex = (Number(page) - 1) * LIMIT; //get starting index of every page
+        const total = await PostMessage.countDocuments({}); //we want to know the total number of posts so that we can have the total number of pages
 
-        res.status(200).json(postMessages);
+        const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);//sorted by newest to oldest, by limit, and skips to startindex
+
+        res.status(200).json({ data:posts, currentPage:Number(page), numberOfPages:Math.ceil(total/LIMIT) });
+        //passing back to front end are the posts, current page, and total numberof pages that divides total documents/posts per page
     } catch (error) {
         res.status(404).json({message:error.message});
+    }
+}
+
+export const getPostsBySearch = async (req,res) => {
+    const { searchQuery, tags } = req.query 
+    try {
+        const title = new RegExp(searchQuery, 'i') //i ignorecase
+
+        const posts = await PostMessage.find({ $or: [{ title },{ tags: { $in:tags.split(',') } }] });//$or find me title or tags
+        //$in is one of the tags in the array of tags equal to any of my tags
+
+        res.json( { data:posts }); 
+    } catch(error) {
+        res.status(404).json({message:error.message})
     }
 }
 
