@@ -1,13 +1,15 @@
-import { FETCH_ALL, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, END_LOADING, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 import * as api from '../api'; // allows us to access api files as object methods such as api.fetchPosts();
 
 //Action Creators 
 
 export const getPosts = (page) => async (dispatch) => {
     try {
+        dispatch({type:START_LOADING});
         const { data } = await api.fetchPosts(page); //destructure response into data
 
         dispatch({ type: FETCH_ALL, payload: data });//here we are using redux to pass/dispatch an action from data from backend
+        dispatch({type:END_LOADING});
     } catch (error) {
         console.log(error)
     }
@@ -15,10 +17,12 @@ export const getPosts = (page) => async (dispatch) => {
 
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
+        dispatch({type: START_LOADING});
         const { data : { data }} = await api.fetchPostsBySearch(searchQuery); //destructure data twice, first time because of axios request
         //2nd time is cuz we put it in an a new object called data after searching 
         
         dispatch({ type:FETCH_BY_SEARCH, payload:data });
+        dispatch({type:END_LOADING});
     } catch (error) {
         console.log(error);
     }
@@ -26,9 +30,11 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
 
 export const createPost = (post) => async (dispatch) => {
     try {
+        dispatch({type:START_LOADING});
         const { data } = await api.createPost(post);
 
         dispatch({ type: CREATE, payload:data});
+        dispatch({type:END_LOADING});
     } catch(error) {
         console.log(error);
     }
