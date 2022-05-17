@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grow, Grid } from '@material-ui/core';
-import { useDispatch } from 'react-redux'; //allows us to dispatch an action
 import { getPosts } from '../../actions/posts';
+import { useDispatch } from 'react-redux'; //allows us to dispatch an action
 
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
@@ -9,7 +9,7 @@ import Form from '../Form/Form';
 import useStyles from './styles';
 
 const Home = () => {
-    const [currentId,setCurrentId] = useState(null);
+    const [currentId,setCurrentId] = useState(0);
     const classes = useStyles();
     const dispatch = useDispatch();//a hook
 

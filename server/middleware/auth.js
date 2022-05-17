@@ -6,15 +6,14 @@ import jwt from 'jsonwebtoken';
 
 const auth = async (req, res, next) => {
     try {
-        const token = req.headers.Authorization.split(' ')[1];
+        const token = req.headers.authorization.split(' ')[1];
         const isCustomAuth = token.length < 500; //lower than 500 means its our own, if greater its google
 
         let decodedData;
 
         if(token && isCustomAuth) {
             decodedData = jwt.verify(token, 'test'); //secret must be the same
-
-            req.userId = decodedData?.id
+            req.userId = decodedData?.id;
         } else {
             decodedData = jwt.decode(token) //for google, in this case we don't need 
 

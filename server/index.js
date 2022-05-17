@@ -16,8 +16,8 @@ app.use(bodyParser.json({limit:'30mb',extended:true}));//for images
 app.use(bodyParser.urlencoded({limit:'30mb',extended:true}));
 app.use(cors());
 
-app.use('/posts',postRoutes); //needs to be below cors
 app.use('/user', userRoutes);
+app.use('/posts',postRoutes); //needs to be below cors
 
 const PORT = process.env.PORT || 5000;
 

@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import useStyles from './styles';
 import Input from './Input';
 // import Icon from './icon';
-import GoogleButton from './GoogleButton/GoogleButton';
+// import GoogleButton from './GoogleButton/GoogleButton';
 
 const initialState = { firstName: '', lastName:'', email:'', password:'', confirmPassword:''};
 
@@ -73,7 +73,7 @@ const Auth = () => {
             <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
             </Avatar>
-        <Typography variant='h5'>{isSignup ? 'Sign Up' : 'Sign In'}</Typography>
+        <Typography component='h1' variant='h5'>{isSignup ? 'Sign Up' : 'Sign In'}</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
                 {
