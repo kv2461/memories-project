@@ -1,4 +1,4 @@
-import { FETCH_ALL, FETCH_BY_SEARCH, FETCH_POST, START_LOADING, END_LOADING, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL, FETCH_BY_SEARCH, FETCH_POST, START_LOADING, END_LOADING, CREATE, UPDATE, DELETE, LIKE, COMMENT } from '../constants/actionTypes';
 
 export default (state = { isLoading: true, posts:[]},action) => { //state always needs to equal something, so make an initial value an empty array.
     switch(action.type) {
@@ -25,6 +25,14 @@ export default (state = { isLoading: true, posts:[]},action) => { //state always
         case UPDATE:
         case LIKE:
             return {...state, posts: state.posts.map((post) => post._id === action.payload._id ? action.payload : post)};
+        case COMMENT: 
+            return {...state,
+            posts:state.posts.map((post)=> {
+                if (post._id === action.payload._id) return action.payload;
+                return post;
+                //return all the other posts normally,
+                //change the post that just recieved a comment...
+            })}
         
         case CREATE:
             return {...state, posts: [...state.posts, action.payload]};
